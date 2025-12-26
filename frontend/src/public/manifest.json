@@ -1,0 +1,59 @@
+{
+  "name": "Ratatouille AI: The Fridge-Scavenger Chef",
+  "short_name": "Ratatouille AI",
+  "description": "Discover delicious recipes based on the ingredients in your fridge using AI-powered ingredient detection",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#faf6ed",
+  "theme_color": "#800020",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot-mobile.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ],
+  "categories": ["food", "lifestyle", "utilities"],
+  "shortcuts": [
+    {
+      "name": "Open Camera",
+      "short_name": "Camera",
+      "description": "Scan ingredients from your fridge",
+      "url": "/?action=camera",
+      "icons": [
+        {
+          "src": "/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Chaos Mode",
+      "short_name": "Chaos",
+      "description": "Generate a random recipe",
+      "url": "/?action=chaos",
+      "icons": [
+        {
+          "src": "/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ]
+}
