@@ -1,0 +1,35 @@
+[
+    {
+        "id": 1,
+        "name": "Classic Tomato Pasta",
+        "ingredients": [
+            "bowl",
+            "orange",
+            "apple",
+            "broccoli",
+            "carrot"
+        ],
+        "instructions": "Boil pasta. Heat tomato sauce. Mix.",
+        "note": "Ingredients list is just for testing matching with YOLO classes"
+    },
+    {
+        "id": 2,
+        "name": "Fruit Salad",
+        "ingredients": [
+            "apple",
+            "banana",
+            "orange"
+        ],
+        "instructions": "Chop fruits and mix."
+    },
+    {
+        "id": 3,
+        "name": "Vegetable Stir Fry",
+        "ingredients": [
+            "broccoli",
+            "carrot",
+            "bowl"
+        ],
+        "instructions": "Stir fry vegetables in a pan."
+    }
+]
