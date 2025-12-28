@@ -3,10 +3,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from ultralytics import YOLO
 from PIL import Image
-import io, json, re, uuid
+import io, json, re, uuid, os
 from typing import List, Dict, Any, Optional
 
-from fastapi.middleware.cors import CORSMiddleware
+app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
@@ -32,8 +32,13 @@ recipes_db: List[Dict[str, Any]] = []
 # ----------------------------
 # Helpers
 # ----------------------------
-def load_recipes(path: str = "recipes.json") -> List[Dict[str, Any]]:
+# helpers
+def get_file_path(filename: str) -> str:
+    return os.path.join(os.path.dirname(__file__), filename)
+
+def load_recipes() -> List[Dict[str, Any]]:
     """Load recipes JSON into memory once."""
+    path = get_file_path("recipes.json")
     try:
         with open(path, "r", encoding="utf-8") as f:
             data = json.load(f)
@@ -134,14 +139,22 @@ async def detect_food(file: UploadFile = File(...)):
         raise HTTPException(status_code=500, detail="Model not loaded.")
 
     # Read image bytes
+    # Read image bytes
     image_data = await file.read()
-    try:
-        img = Image.open(io.BytesIO(image_data)).convert("RGB")
-    except Exception:
-        raise HTTPException(status_code=400, detail="Invalid image file.")
+    
+    from fastapi.concurrency import run_in_threadpool
+    
+    def process_and_predict(data: bytes):
+        try:
+            img = Image.open(io.BytesIO(data)).convert("RGB")
+        except Exception:
+            return None
+        # YOLO prediction (explicit CPU)
+        return model.predict(img, conf=0.25, device="cpu", verbose=False)
 
-    # YOLO prediction (explicit CPU)
-    results = model.predict(img, conf=0.25, device="cpu", verbose=False)
+    results = await run_in_threadpool(process_and_predict, image_data)
+    if results is None:
+         raise HTTPException(status_code=400, detail="Invalid image file.")
 
     # Extract + deduplicate (keep max confidence per class)
     best_conf: Dict[str, float] = {}

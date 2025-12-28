@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { Apple, Beef, Carrot, Egg, Fish, Milk, Wheat, Leaf, Droplets, Flame } from "lucide-react";
+import { Apple, Beef, Carrot, Egg, Fish, Milk, Wheat, Leaf, Droplets, Flame, Plus, X } from "lucide-react";
 
 interface Ingredient {
   name: string;
@@ -8,6 +8,8 @@ interface Ingredient {
 
 interface IngredientBubblesProps {
   ingredients: Ingredient[];
+  onAdd: () => void;
+  onRemove: (name: string) => void;
 }
 
 const iconMap: { [key: string]: any } = {
@@ -46,7 +48,7 @@ function getIconForIngredient(name: string) {
   return Apple; // default icon
 }
 
-export function IngredientBubbles({ ingredients }: IngredientBubblesProps) {
+export function IngredientBubbles({ ingredients, onAdd, onRemove }: IngredientBubblesProps) {
   if (ingredients.length === 0) return null;
 
   return (
@@ -59,11 +61,11 @@ export function IngredientBubbles({ ingredients }: IngredientBubblesProps) {
       <h3 className="text-center mb-4" style={{ color: "#800020" }}>
         Detected Ingredients
       </h3>
-      
+
       <div className="flex flex-wrap gap-3 justify-center">
         {ingredients.map((ingredient, index) => {
           const Icon = getIconForIngredient(ingredient.name);
-          
+
           return (
             <motion.div
               key={ingredient.name}
@@ -77,7 +79,7 @@ export function IngredientBubbles({ ingredients }: IngredientBubblesProps) {
               }}
             >
               <motion.div
-                className="relative px-4 py-3 rounded-full flex items-center gap-2 cursor-default"
+                className="relative px-4 py-3 rounded-full flex items-center gap-2 cursor-default group"
                 style={{
                   background: "linear-gradient(135deg, #f4e8d0 0%, #e8dcc0 100%)",
                   boxShadow: "0 4px 12px rgba(139, 90, 43, 0.2)",
@@ -105,7 +107,19 @@ export function IngredientBubbles({ ingredients }: IngredientBubblesProps) {
                   <Icon className="w-5 h-5" style={{ color: "#800020" }} />
                 </div>
                 <span style={{ color: "#2d2416" }}>{ingredient.name}</span>
-                
+
+                {/* Remove Button */}
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onRemove(ingredient.name);
+                  }}
+                  className="ml-1 p-1 rounded-full hover:bg-black/10 transition-colors"
+                  aria-label={`Remove ${ingredient.name}`}
+                >
+                  <X className="w-3 h-3 text-[#8b5a2b]" />
+                </button>
+
                 {/* Confidence badge */}
                 <motion.div
                   className="absolute -top-1 -right-1 w-6 h-6 rounded-full flex items-center justify-center text-xs"
@@ -140,6 +154,28 @@ export function IngredientBubbles({ ingredients }: IngredientBubblesProps) {
             </motion.div>
           );
         })}
+
+        {/* Add Button */}
+        <motion.button
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ delay: ingredients.length * 0.1 }}
+          className="px-4 py-3 rounded-full flex items-center gap-2 cursor-pointer"
+          style={{
+            background: "linear-gradient(135deg, #fff 0%, #f0fdf4 100%)",
+            boxShadow: "0 4px 12px rgba(74, 222, 128, 0.2)",
+            border: "2px dashed #4ade80",
+            color: "#15803d"
+          }}
+          whileHover={{ scale: 1.1, boxShadow: "0 6px 20px rgba(74, 222, 128, 0.3)" }}
+          whileTap={{ scale: 0.95 }}
+          onClick={onAdd}
+        >
+          <div className="w-8 h-8 rounded-full flex items-center justify-center" style={{ background: "#dcfce7" }}>
+            <Plus className="w-5 h-5" />
+          </div>
+          <span>Add</span>
+        </motion.button>
       </div>
     </motion.div>
   );

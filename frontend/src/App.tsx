@@ -8,7 +8,10 @@ import { RecipeModal } from "./components/RecipeModal";
 import { ChaosButton } from "./components/ChaosButton";
 import { ScanningAnimation } from "./components/ScanningAnimation";
 import { InstallPrompt } from "./components/InstallPrompt";
+import { AddIngredientModal } from "./components/AddIngredientModal";
 import { ToastNotification, ToastType } from "./components/ToastNotification";
+
+// ... existing imports ...
 
 /** =========================
  * Types used by the UI
@@ -86,6 +89,7 @@ function App() {
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   const [toast, setToast] = useState<{ message: string; type: ToastType; isVisible: boolean }>({
     message: "",
@@ -95,6 +99,29 @@ function App() {
 
   const showToast = (message: string, type: ToastType) => {
     setToast({ message, type, isVisible: true });
+  };
+
+  // Define handleManualAddIngredient here to fix scope issues
+  const handleManualAddIngredient = async (name: string) => {
+    // Check if exists
+    if (ingredients.some(i => i.name.toLowerCase() === name.toLowerCase())) {
+      showToast(`${name} is already in the list!`, "info");
+      return;
+    }
+
+    const newIng = { name, confidence: 1.0 };
+    const newIngredients = [...ingredients, newIng];
+    setIngredients(newIngredients);
+
+    // Refetch recipes
+    try {
+      const matched = await getMatchingRecipes(newIngredients);
+      const mapped = matched.map(mapBackendRecipeToUI);
+      setRecipes(mapped);
+      showToast(`Added ${name}!`, "success");
+    } catch (e) {
+      showToast("Failed to update recipes", "error");
+    }
   };
 
   const hideToast = () => {
@@ -248,6 +275,25 @@ function App() {
     }
   };
 
+  const handleRemoveIngredient = async (name: string) => {
+    const newIngredients = ingredients.filter(i => i.name !== name);
+    setIngredients(newIngredients);
+
+    // If no ingredients left, clear recipes
+    if (newIngredients.length === 0) {
+      setRecipes([]);
+      return;
+    }
+
+    try {
+      const matched = await getMatchingRecipes(newIngredients);
+      const mapped = matched.map(mapBackendRecipeToUI);
+      setRecipes(mapped);
+    } catch (e) {
+      console.error("Failed to refresh recipes after removal", e);
+    }
+  };
+
   const hasResults = useMemo(() => ingredients.length > 0 || recipes.length > 0, [ingredients, recipes]);
 
   return (
@@ -292,6 +338,7 @@ function App() {
         </motion.section>
 
         {/* Detected ingredients */}
+        {/* Detected ingredients */}
         {ingredients.length > 0 && (
           <motion.section
             className="mb-12"
@@ -299,7 +346,11 @@ function App() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <IngredientBubbles ingredients={ingredients} />
+            <IngredientBubbles
+              ingredients={ingredients}
+              onAdd={() => setIsAddModalOpen(true)}
+              onRemove={handleRemoveIngredient}
+            />
           </motion.section>
         )}
 
@@ -379,6 +430,13 @@ function App() {
 
       {/* Recipe Modal */}
       <RecipeModal recipe={selectedRecipe} onClose={() => setSelectedRecipe(null)} />
+
+      {/* Add Ingredient Modal */}
+      <AddIngredientModal
+        isOpen={isAddModalOpen}
+        onClose={() => setIsAddModalOpen(false)}
+        onAdd={handleManualAddIngredient}
+      />
 
       {/* Footer */}
       <motion.footer
