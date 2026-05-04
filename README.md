@@ -573,7 +573,7 @@ git --version        # 2.30.0 or higher
 
 ```bash
 # Clone the repository
-git clone https://github.com/YOUR_USERNAME/ratatouille-ai.git
+git clone https://github.com/TechySakib/ratatouille-ai.git
 
 # Navigate into project
 cd ratatouille-ai
@@ -1645,7 +1645,7 @@ file image.jpg
 
 ```bash
 # Fork on GitHub
-git clone https://github.com/YOUR_USERNAME/ratatouille-ai.git
+git clone https://github.com/TechySakib/ratatouille-ai.git
 cd ratatouille-ai
 ```
 
@@ -1868,29 +1868,12 @@ Then display in UI.
 
 ## 📞 Support & Community
 
-- **GitHub Issues** → [Report bugs](https://github.com/YOUR_REPO/issues)
-- **GitHub Discussions** → [Ask questions](https://github.com/YOUR_REPO/discussions)
+- **GitHub Issues** → [Report bugs](https://github.com/TechySakib/issues)
+- **GitHub Discussions** → [Ask questions](https://github.com/techySakib/discussions)
 - **Email** → support@ratatouille.example.com
-- **Discord** → [Join community](https://discord.gg/ratatouille)
-- **Twitter** → [@RatatoulleAI](https://twitter.com)
 
 ---
 
-## 📜 License
-
-This project is licensed under the **MIT License** — see [LICENSE](LICENSE) file for details.
-
-**You are free to:**
-- Use commercially
-- Modify the code
-- Distribute and sublicense
-- Use privately
-
-**You must:**
-- Include original license
-- Include copyright notice
-
----
 
 ## 🙏 Acknowledgments
 
@@ -1946,7 +1929,7 @@ After building with this project, you'll understand:
 
 ### 🔥 Built with Intelligence, Optimized for Speed, Designed for Joy
 
-**Made with ❤️ by the Ratatouille AI Team**
+**Made with ❤️ by the Nazmus Sakib**
 
 *Transform your kitchen. Detect ingredients. Discover recipes. Cook with confidence.*
 
@@ -1961,7 +1944,7 @@ After building with this project, you'll understand:
 
 ---
 
-*Last Updated: January 15, 2024*  
+*Last Updated: mat 5, 2026*  
 *Version: 1.0.0*  
 *Status: Production Ready* ✨
 
