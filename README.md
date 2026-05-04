@@ -8,7 +8,6 @@
 ![Python](https://img.shields.io/badge/Language-Python%203.9%2B-3776ab?style=for-the-badge&logo=python)
 ![YOLOv8](https://img.shields.io/badge/AI-YOLOv8-FF6B6B?style=for-the-badge&logo=yolo)
 ![PWA](https://img.shields.io/badge/Type-Progressive%20Web%20App-purple?style=for-the-badge&logo=pwa)
-![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)
 ![Platform](https://img.shields.io/badge/Platform-Cross%20Platform-lightblue?style=for-the-badge)
 
 **Transform your kitchen. Detect ingredients. Discover recipes. Cook with confidence.**
