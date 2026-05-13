@@ -1869,7 +1869,7 @@ Then display in UI.
 
 - **GitHub Issues** → [Report bugs](https://github.com/TechySakib/issues)
 - **GitHub Discussions** → [Ask questions](https://github.com/techySakib/discussions)
-- **Email** → support@ratatouille.example.com
+- **Email** → nazmus.sakib1@northsouth.edu
 
 ---
 
